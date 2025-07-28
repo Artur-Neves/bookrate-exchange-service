@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-exchange
+spec:
+  selector:
+    matchLabels:
+      app: mysql-exchange
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql-exchange
+    spec:
+      containers:
+        - name: mysql-exchange
+          image: mysql:8
+          ports:
+            - containerPort: 3306
+          envFrom:
+            - configMapRef:
+                name: exchange-config
+            - secretRef:
+                name: exchange-secrets
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-exchange-storage
+      volumes:
+        - name: mysql-exchange-storage
+          persistentVolumeClaim:
+            claimName: mysql-exchange-pvc
