@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: exchange-config
-data:
-  DB_URL: jdbc:mysql://mysql-exchange-service:3306/exchange-service?createDatabaseIfNotExist=true

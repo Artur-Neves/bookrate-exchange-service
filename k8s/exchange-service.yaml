@@ -6,10 +6,18 @@ metadata:
   name: exchange-service
   namespace: default
 spec:
-  type: LoadBalancer
+  allocateLoadBalancerNodePorts: true
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
   ports:
-1    - port: 8000
-      targetPort: 8000
+    - nodePort: 30327
+      port: 8000
       protocol: TCP
+      targetPort: 8000
   selector:
     app: exchange-service
+  sessionAffinity: None
+  type: LoadBalancer
